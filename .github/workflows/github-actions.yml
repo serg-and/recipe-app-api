@@ -6,8 +6,8 @@ jobs:
     steps:
       - name: Check out repository code
         uses: actions/checkout@v2
-      - run: sudo apt-get update \
-          sudo apt install -y python docker-engine docker-ce docker-ce-cli containerd.io
+      - run: sudo apt-get update
+      - run: sudo apt install -y python docker-engine docker-ce docker-ce-cli containerd.io
       - run: pip install docker-compose
       - name: Perform Unit Tests
         run: docker-compose run app sh -c "python manage.py test && flake8"
