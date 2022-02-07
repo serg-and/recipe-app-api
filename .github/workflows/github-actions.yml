@@ -7,7 +7,16 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v2
       - run: sudo apt-get update
-      - run: sudo apt install -y python docker-engine docker-ce docker-ce-cli containerd.io
+      - run: sudo apt-get install \
+          ca-certificates \
+          curl \
+          gnupg \
+          lsb-release
+      - run: curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo gpg --dearmor -o /usr/share/keyrings/docker-archive-keyring.gpg
+      - run: echo \
+        `deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
+        $(lsb_release -cs) stable` | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+      - run: sudo apt install -y python docker-ce docker-ce-cli containerd.io
       - run: pip install docker-compose
       - name: Perform Unit Tests
         run: docker-compose run app sh -c "python manage.py test && flake8"
