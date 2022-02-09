@@ -28,3 +28,4 @@ class NewUserAdmin(BaseUserAdmin):
 admin.site.register(models.User, NewUserAdmin)
 admin.site.register(models.Tag)
 admin.site.register(models.Ingredient)
+admin.site.register(models.Recipe)
